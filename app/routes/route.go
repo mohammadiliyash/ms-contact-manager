@@ -31,11 +31,20 @@ func New(diagnosticsHandler http.Handler) *mux.Router {
 	// Load balancer check
 	mainRouter.Methods(http.MethodGet).Path(pathHeartbeat).Name(routeNameHeartbeat).HandlerFunc(c.SayOK)
 
-	// Route  /ms-login
+	// Load balancer check
 	mainRouter.Methods(http.MethodGet).Path(pathPrefixAppName).Name(routeNameHeartbeat).HandlerFunc(c.SayOK)
 
 	// Load balancer error check
 	mainRouter.Methods(http.MethodGet).Path(pathSayError).Name(routeNameSayError).HandlerFunc(c.SayError)
+
+	// Load balancer  error check
+	mainRouter.Methods(http.MethodGet).Path(pathPrefixAppName).Name(routeNameSayError).HandlerFunc(c.SayOK)
+
+	// Versioned App Routes - V1
+	mainRouter.Methods(http.MethodGet).Path(pathPrefixV1 + pathLookup).Name(routeNameSayError).HandlerFunc(c.HandlePostalCodeLookup)
+
+	// Versioned App Routes - V2
+	mainRouter.Methods(http.MethodGet).Path(pathPrefixV2 + pathLookup).Name(routeNameSayError).HandlerFunc(c.HandleLegacyPostalCodeLookup)
 
 	return mainRouter
 

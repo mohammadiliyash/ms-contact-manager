@@ -6,7 +6,7 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
-// Config for the ms-login web service
+// Config for the micro-service
 var Config *MSCMConfig
 
 func Initialize() {

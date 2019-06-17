@@ -1,6 +1,11 @@
 package logging
 
-import logrus "github.com/sirupsen/logrus"
+import (
+	"context"
+	"fmt"
+
+	logrus "github.com/sirupsen/logrus"
+)
 
 // logWriter wraps a logrus Entry
 type logWriter struct {
@@ -49,4 +54,26 @@ func (lw *logWriter) Error(args ...interface{}) {
 		return
 	}
 	lw.getEntry().Error(args...)
+}
+
+func (lw *logWriter) WithField(key string, value interface{}) Logger {
+	ll := lw.getEntry().WithField(key, value)
+	lw.setEntry(ll)
+	return lw
+}
+
+func (lw *logWriter) CError(c context.Context, args ...interface{}) {
+	if level < logrus.ErrorLevel {
+		return
+	}
+	lw.WithContext(c).Error(args...)
+}
+func (lw *logWriter) WithContext(c context.Context) Logger {
+	fields, err := fieldsFromContext(c)
+	if err != nil {
+		fmt.Println(err.Error())
+		return nil
+	}
+	lw.setEntry(lw.getEntry().WithFields(fields))
+	return lw
 }
