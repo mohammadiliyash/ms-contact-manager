@@ -1,8 +1,6 @@
 package main
 
 import (
-	"errors"
-	"fmt"
 	"net/http"
 
 	"github.com/miliyash/ms-contact-manager/app/routes"
@@ -12,20 +10,25 @@ import (
 	"github.com/urfave/negroni"
 )
 
+const LISTEN_PORT = "4000"
+
 func main() {
 
+	log.Info("Service initialized")
+
+	log.New().WithFields(map[string]interface{}{
+		"e":    "webserver_start",
+		"port": LISTEN_PORT,
+	}).Info(".")
+
 	cfg.Initialize()
-	log.AppName = cfg.AppName
-	fmt.Println(cfg.AppName)
-	err := errors.New("Error")
-	log.WithError(err)
-	log.Error(err, nil)
+
 	n := negroni.New()
 	n.Use(gzip.Gzip(gzip.DefaultCompression))
 	n.Use(negroni.NewRecovery())
 
 	n.UseHandler(routes.New(handler{}))
-	n.Run(":4000")
+	n.Run(":" + LISTEN_PORT)
 
 }
 
@@ -35,7 +38,6 @@ type handler struct{}
 func (h handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	code := http.StatusOK
-
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
 	w.WriteHeader(code)
 

@@ -2,9 +2,12 @@ package models
 
 import (
 	"strings"
+
+	"github.com/miliyash/ms-contact-manager/app/utils"
 )
 
 type PostalCode struct {
+	utils.ServiceResult
 	ID               string  `json:"id"`
 	Value            string  `json:"value"`
 	City             *string `json:"city" logging:"-"`

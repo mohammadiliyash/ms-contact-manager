@@ -3,6 +3,7 @@ package config
 import (
 	"io/ioutil"
 
+	log "github.com/miliyash/ms-contact-manager/logging"
 	"gopkg.in/yaml.v2"
 )
 
@@ -10,6 +11,7 @@ import (
 var Config *MSCMConfig
 
 func Initialize() {
+	log.Debug("calling config.Initialize()")
 	confContent, err := ioutil.ReadFile("config.yml")
 	if err != nil {
 		panic(err)

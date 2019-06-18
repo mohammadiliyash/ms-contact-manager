@@ -1,72 +1,52 @@
 package controllers
 
 import (
-	"encoding/json"
-	"errors"
 	"net/http"
 
 	//Framework
 	"github.com/gorilla/mux"
 	models "github.com/miliyash/ms-contact-manager/app/models"
-	log "github.com/miliyash/ms-contact-manager/logging"
+	pcs "github.com/miliyash/ms-contact-manager/app/services/postal-code"
+	"github.com/miliyash/ms-contact-manager/app/utils"
 )
 
 //HandlePostalCodeLookup
 func HandlePostalCodeLookup(w http.ResponseWriter, r *http.Request) {
-
 	c := r.Context()
+	var jsonAPIError *utils.JSONAPIError
+	var result *models.PostalCode
 	args := mux.Vars(r)
 	postalCode := args["code"]
-	lw := log.WithField("postal-code", postalCode)
-	url := r.URL
-	if url == nil {
-		lw.CError(c, "HandlePostalCodeLookup: Nil URL!")
-		w.WriteHeader(http.StatusInternalServerError)
-		return
-	}
-	lw = lw.WithField("request-url", url)
-	pcRecord := models.PostalCodeDict[postalCode]
-	if pcRecord == nil {
-		lw.WithError(errors.New("Postal code not found"))
-		w.WriteHeader(http.StatusNotFound)
-	} else {
-		pcRecord.ID = postalCode
-		lw.WithError(errors.New("Postal code not found"))
-		w.Header().Set("Content-Type", "application/json; charset=utf-8")
-		w.WriteHeader(http.StatusOK)
-		foo, _ := json.MarshalIndent(pcRecord, "", "  ")
 
-		w.Write(foo)
+	result, err := pcs.GetPostalCodeData(postalCode)
+
+	if err != nil {
+		jsonAPIError = &utils.JSONAPIError{Status: "400", Detail: err.Error()}
 	}
+	HandlePostResponse(c, w, jsonAPIError == nil, jsonAPIError, result)
 }
 
 // HandleLegacyPostalCodeLookup returns rating data for a postal code, wrapped in a legacy struct
 func HandleLegacyPostalCodeLookup(w http.ResponseWriter, r *http.Request) {
+
 	c := r.Context()
+	var jsonAPIError *utils.JSONAPIError
+	var resultPc *models.PostalCode
 	args := mux.Vars(r)
 	postalCode := args["code"]
-	lw := log.WithField("postal-code", postalCode)
-	url := r.URL
-	if url == nil {
-		lw.CError(c, "HandlePostalCodeLookup: Nil URL!")
-		w.WriteHeader(http.StatusInternalServerError)
-		return
-	}
-	lw = lw.WithField("request-url", url)
-	pcRecord := models.PostalCodeDict[postalCode]
-	if pcRecord == nil {
-		lw.WithError(errors.New("Postal code not found"))
-		w.WriteHeader(http.StatusNotFound)
-	} else {
-		pcRecord.ID = postalCode
-		lw.WithError(errors.New("Postal code not found"))
-		dataType := "postalCodes"
-		w.Header().Set("Content-Type", "application/json; charset=utf-8")
-		w.WriteHeader(http.StatusOK)
-		quux := models.LegacyData{Attributes: pcRecord}
-		fum := models.LegacyContainer{Data: &quux, ID: &postalCode, Type: &dataType}
-		foo, _ := json.MarshalIndent(fum, "", "  ")
+	var result models.LegacyContainer
+	resultPc, err := pcs.GetPostalCodeData(postalCode)
 
-		w.Write(foo)
+	if err == nil {
+
+		dataType := "postalCodes"
+		legacyData := models.LegacyData{Attributes: resultPc}
+		result = models.LegacyContainer{Data: &legacyData, ID: &postalCode, Type: &dataType}
+		//result, _ = json.MarshalIndent(legacyDataContainer, "", "  ")
 	}
+	if err != nil {
+		jsonAPIError = &utils.JSONAPIError{Status: "400", Detail: err.Error()}
+	}
+	HandlePostResponse(c, w, jsonAPIError == nil, jsonAPIError, result)
+
 }

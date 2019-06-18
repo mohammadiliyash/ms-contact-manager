@@ -1,9 +1,6 @@
 package logging
 
 import (
-	"context"
-	"fmt"
-
 	logrus "github.com/sirupsen/logrus"
 )
 
@@ -30,12 +27,7 @@ func (lw *logWriter) setEntry(entry *logrus.Entry) *logWriter {
 }
 
 func (lw *logWriter) createEntry() *logrus.Entry {
-	return logrus.WithFields(
-		logrus.Fields{
-			FIELDNAME_APPNAME:     AppName,
-			FIELDNAME_HOSTNAME:    HostName,
-			FIELDNAME_ENVIRONMENT: Environment,
-		})
+	return logrus.WithFields(logrus.Fields{})
 }
 
 func (lw *logWriter) WithError(err error) Logger {
@@ -44,9 +36,10 @@ func (lw *logWriter) WithError(err error) Logger {
 	return lw
 }
 
-// Error logs an error message
-func Error(args ...interface{}) {
-	New().Error(args...)
+func (lw *logWriter) WithField(key string, value interface{}) Logger {
+	ll := lw.getEntry().WithField(key, value)
+	lw.setEntry(ll)
+	return lw
 }
 
 func (lw *logWriter) Error(args ...interface{}) {
@@ -56,24 +49,22 @@ func (lw *logWriter) Error(args ...interface{}) {
 	lw.getEntry().Error(args...)
 }
 
-func (lw *logWriter) WithField(key string, value interface{}) Logger {
-	ll := lw.getEntry().WithField(key, value)
+func (lw *logWriter) WithFields(fields map[string]interface{}) Logger {
+	ll := lw.getEntry().WithFields(fields)
 	lw.setEntry(ll)
 	return lw
 }
 
-func (lw *logWriter) CError(c context.Context, args ...interface{}) {
-	if level < logrus.ErrorLevel {
+func (lw *logWriter) Debug(args ...interface{}) {
+	if level < logrus.DebugLevel {
 		return
 	}
-	lw.WithContext(c).Error(args...)
+	lw.getEntry().Debug(args...)
 }
-func (lw *logWriter) WithContext(c context.Context) Logger {
-	fields, err := fieldsFromContext(c)
-	if err != nil {
-		fmt.Println(err.Error())
-		return nil
+
+func (lw *logWriter) Info(args ...interface{}) {
+	if level < logrus.InfoLevel {
+		return
 	}
-	lw.setEntry(lw.getEntry().WithFields(fields))
-	return lw
+	lw.getEntry().Info(args...)
 }
