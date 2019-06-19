@@ -61,15 +61,7 @@ func (c *Contact) CreateContact(contact *dbModels.Contact) {
 func (c *Contact) CreateContactFromchannel(chContact chan *dbModels.Contact) {
 
 	contactchannel := <-chContact
-	dbService := database.NewDataBaseService()
-	db, err := dbService.GetDB()
-	if err == nil {
-		if !db.HasTable("contacts") {
-			db.CreateTable(&dbModels.Contact{})
-		}
-		db.Create(&contactchannel)
-	}
-	db.Close()
+	go c.CreateContact(contactchannel)
 }
 
 // UpdateContact ...
