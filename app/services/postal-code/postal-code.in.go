@@ -6,8 +6,10 @@ import (
 	models "github.com/miliyash/ms-contact-manager/app/models"
 )
 
+//INPostalCode ...
 type INPostalCode models.PostalCode
 
+// GetPostalCodeData ...
 func (p *INPostalCode) GetPostalCodeData(postalCode string) (result *models.PostalCode, err error) {
 
 	var city = "Mock City Delhi"

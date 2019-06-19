@@ -18,17 +18,19 @@ import (
 
 var chContact = make(chan *dbModels.Contact, 1000)
 
+// GetMainController ...
 func GetMainController(postalcode pc.IPostalCode, contactHandler ch.IContact, customerHandler ch.ICustomer) *MainController {
 	return &MainController{Postalcode: postalcode, ContactHandler: contactHandler, CustomerHandler: customerHandler}
 }
 
+// MainController struct
 type MainController struct {
 	Postalcode      pc.IPostalCode
 	ContactHandler  ch.IContact
 	CustomerHandler ch.ICustomer
 }
 
-//HandlePostalCodeLookup
+// HandlePostalCodeLookup ...
 func (m *MainController) HandlePostalCodeLookup(w http.ResponseWriter, r *http.Request) {
 	c := r.Context()
 	var jsonAPIError *utils.JSONAPIError
@@ -70,6 +72,7 @@ func (m *MainController) HandleLegacyPostalCodeLookup(w http.ResponseWriter, r *
 
 }
 
+//HandleCreateCustomer ...
 func (m *MainController) HandleCreateCustomer(w http.ResponseWriter, r *http.Request) {
 
 	c := r.Context()

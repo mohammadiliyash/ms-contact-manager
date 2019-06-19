@@ -2,6 +2,7 @@ package models
 
 import "errors"
 
+// Contact ...
 type Contact struct {
 	ContactID      int    `gorm:"primary_key"`
 	ContactName    string `gorm:"type:varchar(50)”`
@@ -10,12 +11,14 @@ type Contact struct {
 	//CustomerId     string
 }
 
+// Customer ...
 type Customer struct {
-	CustomerId   int       `gorm:"primary_key"`
+	CustomerID   int       `gorm:"primary_key"`
 	CustomerName int       `gorm:"type:varchar(50)”`
 	Contacts     []Contact `gorm:"ForeignKey:CustomerId"`
 }
 
+//Validate contact model
 func (c *Contact) Validate() (err error) {
 
 	var message string

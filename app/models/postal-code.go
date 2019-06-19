@@ -6,15 +6,17 @@ import (
 	"github.com/miliyash/ms-contact-manager/app/utils"
 )
 
+//PostalCode struct
 type PostalCode struct {
 	utils.ServiceResult
-	ID               string  `json:"id"`
+	ID               string  `json:"pid"`
 	Value            string  `json:"value"`
 	City             *string `json:"city" logging:"-"`
 	State            *string `json:"state" logging:"-"`
 	CityAbbreviation *string `json:"cityAbbreviation,omitempty"`
 }
 
+// PostalCodeDict dic object for json data
 var PostalCodeDict map[string]*PostalCode
 
 // init is creating a dictionary which helps in finding elements at good speed

@@ -5,12 +5,15 @@ import (
 	dbModels "github.com/miliyash/ms-contact-manager/app/models/database"
 )
 
+//GetNewContactHandler ...
 func GetNewContactHandler() IContact {
 	return &Contact{}
 }
 
+// Contact ...
 type Contact dbModels.Contact
 
+//IContact ...
 type IContact interface {
 	CreateContactFromchannel(chContact chan *dbModels.Contact)
 
@@ -21,6 +24,7 @@ type IContact interface {
 	GetContact()
 }
 
+//CreateContacts ...
 func (c *Contact) CreateContacts(contacts *[]dbModels.Contact) {
 
 	dbService := database.NewDataBaseService()
@@ -39,6 +43,7 @@ func (c *Contact) CreateContacts(contacts *[]dbModels.Contact) {
 
 }
 
+// CreateContact ...
 func (c *Contact) CreateContact(contact *dbModels.Contact) {
 
 	dbService := database.NewDataBaseService()
@@ -52,6 +57,7 @@ func (c *Contact) CreateContact(contact *dbModels.Contact) {
 	db.Close()
 }
 
+// CreateContactFromchannel ...
 func (c *Contact) CreateContactFromchannel(chContact chan *dbModels.Contact) {
 
 	contactchannel := <-chContact
@@ -66,14 +72,17 @@ func (c *Contact) CreateContactFromchannel(chContact chan *dbModels.Contact) {
 	db.Close()
 }
 
+// UpdateContact ...
 func (c *Contact) UpdateContact() {
 
 }
 
+// DeleteContact ...
 func (c *Contact) DeleteContact() {
 
 }
 
+// GetContact ...
 func (c *Contact) GetContact() {
 
 }

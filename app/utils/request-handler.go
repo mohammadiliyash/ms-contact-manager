@@ -6,16 +6,16 @@ import (
 	grq "github.com/parnurzeal/gorequest"
 )
 
-// RequestHandler
+// RequestHandler ...
 type RequestHandler struct {
 }
 
-// IRequestHandler
+// IRequestHandler ...
 type IRequestHandler interface {
 	ServeRequest(grqAgent *grq.SuperAgent) (response *http.Response, body string, errors []error)
 }
 
-// ServeRequest
+// ServeRequest ...
 func (reqestHandler *RequestHandler) ServeRequest(grqAgent *grq.SuperAgent) (response *http.Response, body string, errors []error) {
 	return grqAgent.End()
 }

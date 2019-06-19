@@ -10,11 +10,13 @@ import (
 	cfg "github.com/miliyash/ms-contact-manager/config"
 )
 
-func NewDataBaseService() databaseService {
+// NewDataBaseService ...
+func NewDataBaseService() IDataBase {
 	return dbStruct{}
 }
 
-type databaseService interface {
+// IDataBase Interface for Database connection
+type IDataBase interface {
 	GetDB() (db *gorm.DB, err error)
 }
 
@@ -23,6 +25,7 @@ type dbStruct struct {
 
 var userDB *gorm.DB
 
+//Initialize ...
 func Initialize() {
 
 	var dbStruct = dbStruct{}
@@ -38,6 +41,7 @@ func Initialize() {
 	db.Close()
 }
 
+// GetDB ...
 func (obj dbStruct) GetDB() (db *gorm.DB, err error) {
 
 	conn := fmt.Sprintf("sqlserver://%s:%s@%s:1433?database=contactmanager", cfg.Config.SQLUsername, cfg.Config.SQLPassword, cfg.Config.SQLServer)
