@@ -1,4 +1,4 @@
-package services
+package postalcode
 
 import (
 	"fmt"
@@ -6,7 +6,9 @@ import (
 	models "github.com/miliyash/ms-contact-manager/app/models"
 )
 
-func GetPostalCodeData(postalCode string) (result *models.PostalCode, err error) {
+type USPostalCode models.PostalCode
+
+func (p *USPostalCode) GetPostalCodeData(postalCode string) (result *models.PostalCode, err error) {
 
 	result = models.PostalCodeDict[postalCode]
 	if result == nil {

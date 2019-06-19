@@ -12,5 +12,11 @@ func SayError(w http.ResponseWriter, r *http.Request) {
 
 // SayOK returns a 200
 func SayOK(w http.ResponseWriter, r *http.Request) {
+
+	//db := database.NewDataBaseService()
+	//result, err := db.GetDB()
+	//result, err = result.CreateDatabase()
+	//fmt.Println(result, err)
+
 	w.WriteHeader(http.StatusCreated)
 }

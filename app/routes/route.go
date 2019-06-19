@@ -6,6 +6,9 @@ import (
 	"github.com/gorilla/mux"
 
 	c "github.com/miliyash/ms-contact-manager/app/controllers"
+	contact "github.com/miliyash/ms-contact-manager/app/services/contacts-handler"
+	pc "github.com/miliyash/ms-contact-manager/app/services/postal-code"
+
 	cfg "github.com/miliyash/ms-contact-manager/config"
 )
 
@@ -28,6 +31,13 @@ func New(diagnosticsHandler http.Handler) *mux.Router {
 	//policyEnrollment := pc.GetPolicyEnrollmentModel(cAgent)
 	//controller := c.GetAuthController()
 
+	postalCode := pc.GetNewPostalCodeService()
+	contactHandler := contact.GetNewContactHandler()
+
+	customerHandler := contact.GetNewCustomerHandler()
+
+	controller := c.GetMainController(postalCode, contactHandler, customerHandler)
+
 	// Load balancer check
 	mainRouter.Methods(http.MethodGet).Path(pathHeartbeat).Name(routeNameHeartbeat).HandlerFunc(c.SayOK)
 
@@ -41,10 +51,13 @@ func New(diagnosticsHandler http.Handler) *mux.Router {
 	mainRouter.Methods(http.MethodGet).Path(pathPrefixAppName).Name(routeNameSayError).HandlerFunc(c.SayOK)
 
 	// Versioned App Routes - V1
-	mainRouter.Methods(http.MethodGet).Path(pathPrefixV1 + pathLookup).Name(routeNameSayError).HandlerFunc(c.HandlePostalCodeLookup)
+	mainRouter.Methods(http.MethodGet).Path(pathPrefixV1 + pathLookup).Name(routeNameSayError).HandlerFunc(controller.HandlePostalCodeLookup)
 
 	// Versioned App Routes - V2
-	mainRouter.Methods(http.MethodGet).Path(pathPrefixV2 + pathLookup).Name(routeNameSayError).HandlerFunc(c.HandleLegacyPostalCodeLookup)
+	mainRouter.Methods(http.MethodGet).Path(pathPrefixV2 + pathLookup).Name(routeNameSayError).HandlerFunc(controller.HandleLegacyPostalCodeLookup)
+
+	// Versioned App Routes - V2
+	mainRouter.Methods(http.MethodPost).Path(pathContact).Name(routeNameAddContact).HandlerFunc(controller.HandleCreateCustomer)
 
 	return mainRouter
 

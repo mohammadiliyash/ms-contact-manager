@@ -17,6 +17,9 @@ type PostalCode struct {
 
 var PostalCodeDict map[string]*PostalCode
 
+// init is creating a dictionary which helps in finding elements at good speed
+// we can take a chance at this time as it is one time job and once data is loaded in memory
+// Reading data will be fast -- This is a sample approach , this can be done in better way
 func init() {
 	PostalCodeDict = make(map[string]*PostalCode)
 

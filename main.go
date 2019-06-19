@@ -3,32 +3,19 @@ package main
 import (
 	"net/http"
 
-	"github.com/miliyash/ms-contact-manager/app/routes"
 	cfg "github.com/miliyash/ms-contact-manager/config"
 	log "github.com/miliyash/ms-contact-manager/logging"
-	gzip "github.com/phyber/negroni-gzip/gzip"
-	"github.com/urfave/negroni"
+	web "github.com/miliyash/ms-contact-manager/web_server"
 )
 
 const LISTEN_PORT = "4000"
 
 func main() {
 
-	log.Info("Service initialized")
-
-	log.New().WithFields(map[string]interface{}{
-		"e":    "webserver_start",
-		"port": LISTEN_PORT,
-	}).Info(".")
-
 	cfg.Initialize()
-
-	n := negroni.New()
-	n.Use(gzip.Gzip(gzip.DefaultCompression))
-	n.Use(negroni.NewRecovery())
-
-	n.UseHandler(routes.New(handler{}))
-	n.Run(":" + LISTEN_PORT)
+	server := web.NewServer()
+	log.Info("Web server started")
+	server.Run(":" + LISTEN_PORT)
 
 }
 

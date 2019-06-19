@@ -1,2 +1,5 @@
 environment: test
 key: abc123def456
+SQLServer : localhost
+SQLPassword : Password1
+SQLUsername : app

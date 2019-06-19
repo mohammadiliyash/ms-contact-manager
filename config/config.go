@@ -1,9 +1,11 @@
 package config
 
 import (
+	"fmt"
 	"io/ioutil"
 
 	log "github.com/miliyash/ms-contact-manager/logging"
+
 	"gopkg.in/yaml.v2"
 )
 
@@ -17,9 +19,11 @@ func Initialize() {
 		panic(err)
 	}
 	conf := &MSCMConfig{}
-	if err := yaml.Unmarshal(confContent, conf); err != nil {
-		panic(err)
+	if err := yaml.Unmarshal(confContent, conf); err == nil {
+		Config = conf
 	}
+	fmt.Println(Config)
+
 }
 
 // SetConfig bypasses the usual config override and validation behavior.
@@ -31,6 +35,9 @@ func SetConfig(conf *MSCMConfig) {
 type MSCMConfig struct {
 	Environment string `yaml:"environment"`
 	Key         string `yaml:"key"`
+	SQLServer   string `yaml:"SQLServer"`
+	SQLUsername string `yaml:"SQLUsername"`
+	SQLPassword string `yaml:"SQLPassword"`
 }
 
 const AppName = "ms-contact-manager"
