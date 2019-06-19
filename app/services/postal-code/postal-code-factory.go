@@ -9,5 +9,5 @@ type IPostalCode interface {
 
 //GetNewPostalCodeService ...
 func GetNewPostalCodeService() IPostalCode {
-	return &INPostalCode{}
+	return &USPostalCode{}
 }
