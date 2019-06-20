@@ -16,7 +16,7 @@ import (
 	"github.com/miliyash/ms-contact-manager/app/utils"
 )
 
-var chContact = make(chan *dbModels.Contact, 1000)
+// var chContact = make(chan *dbModels.Contact, 1000)
 
 // GetMainController ...
 func GetMainController(postalcode pc.IPostalCode, contactHandler ch.IContact, customerHandler ch.ICustomer) *MainController {
@@ -90,7 +90,7 @@ func (m *MainController) HandleCreateCustomer(w http.ResponseWriter, r *http.Req
 
 		err = resource.Validate()
 		if err == nil {
-
+			var chContact = make(chan *dbModels.Contact, 1000)
 			chContact <- &resource
 			m.ContactHandler.CreateContactFromchannel(chContact)
 		}

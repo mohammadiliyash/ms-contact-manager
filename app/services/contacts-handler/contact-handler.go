@@ -1,6 +1,8 @@
 package contactshandler
 
 import (
+	"time"
+
 	database "github.com/miliyash/ms-contact-manager/app/database"
 	dbModels "github.com/miliyash/ms-contact-manager/app/models/database"
 )
@@ -46,6 +48,7 @@ func (c *Contact) CreateContacts(contacts *[]dbModels.Contact) {
 // CreateContact ...
 func (c *Contact) CreateContact(contact *dbModels.Contact) {
 
+	time.Sleep(30 * time.Second)
 	dbService := database.NewDataBaseService()
 	db, err := dbService.GetDB()
 	if err == nil {

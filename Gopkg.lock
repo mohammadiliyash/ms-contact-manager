@@ -2,12 +2,58 @@
 
 
 [[projects]]
+  digest = "1:3d3a509c5ba327e8573bb57f9da8430c63a46a06886eb1d2ffc8af4e76f31c72"
+  name = "cloud.google.com/go"
+  packages = ["civil"]
+  pruneopts = "UT"
+  revision = "457ea5c15ccf3b87db582c450e80101989da35f7"
+  version = "v0.40.0"
+
+[[projects]]
+  digest = "1:ffe9824d294da03b391f44e1ae8281281b4afc1bdaa9588c9097785e3af10cec"
+  name = "github.com/davecgh/go-spew"
+  packages = ["spew"]
+  pruneopts = "UT"
+  revision = "8991bc29aa16c548c550c7ff78260e27b9ab7c73"
+  version = "v1.1.1"
+
+[[projects]]
+  branch = "master"
+  digest = "1:2e702b60af5efe4b3b0e3b40fddfb6beba6adca1e0a7ccd25cc5c21b5e7df9ef"
+  name = "github.com/denisenkom/go-mssqldb"
+  packages = [
+    ".",
+    "internal/cp",
+  ]
+  pruneopts = "UT"
+  revision = "eb9f6a1743f30383c8168cc520ca5db1f744d6f4"
+
+[[projects]]
   digest = "1:3af6be4fee7c08f81f13d36f04ffb63ad4b6b5aaba12cce96095c7c2863d4912"
   name = "github.com/gorilla/mux"
   packages = ["."]
   pruneopts = "UT"
   revision = "ed099d42384823742bba0bf9a72b53b55c9e2e38"
   version = "v1.7.2"
+
+[[projects]]
+  digest = "1:f9c288f6c37038683899310b674ff692b9e6677525e8214c1cabd7ae9f4e1570"
+  name = "github.com/jinzhu/gorm"
+  packages = [
+    ".",
+    "dialects/mssql",
+  ]
+  pruneopts = "UT"
+  revision = "01b66011427614f01e84a473b0303c917179f2a0"
+  version = "v1.9.9"
+
+[[projects]]
+  digest = "1:01ed62f8f4f574d8aff1d88caee113700a2b44c42351943fa73cc1808f736a50"
+  name = "github.com/jinzhu/inflection"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "f5c5f50e6090ae76a29240b61ae2a90dd810112e"
+  version = "v1.0.0"
 
 [[projects]]
   digest = "1:31e761d97c76151dde79e9d28964a812c46efc5baee4085b86f68f0c654450de"
@@ -50,12 +96,39 @@
   version = "v0.8.1"
 
 [[projects]]
+  digest = "1:0028cb19b2e4c3112225cd871870f2d9cf49b9b4276531f03438a88e94be86fe"
+  name = "github.com/pmezard/go-difflib"
+  packages = ["difflib"]
+  pruneopts = "UT"
+  revision = "792786c7400a136282c1664665ae0a8db921c6c2"
+  version = "v1.0.0"
+
+[[projects]]
   digest = "1:04457f9f6f3ffc5fea48e71d62f2ca256637dee0a04d710288e27e05c8b41976"
   name = "github.com/sirupsen/logrus"
   packages = ["."]
   pruneopts = "UT"
   revision = "839c75faf7f98a33d445d181f3018b5c3409a45e"
   version = "v1.4.2"
+
+[[projects]]
+  digest = "1:ac83cf90d08b63ad5f7e020ef480d319ae890c208f8524622a2f3136e2686b02"
+  name = "github.com/stretchr/objx"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "477a77ecc69700c7cdeb1fa9e129548e1c1c393c"
+  version = "v0.1.1"
+
+[[projects]]
+  digest = "1:0bcc464dabcfad5393daf87c3f8142911d0f6c52569b837e91a1c15e890265f3"
+  name = "github.com/stretchr/testify"
+  packages = [
+    "assert",
+    "mock",
+  ]
+  pruneopts = "UT"
+  revision = "ffdc059bfe9ce6a4e144ba849dbedead332c6053"
+  version = "v1.3.0"
 
 [[projects]]
   digest = "1:d688f4ad71b5dfad95c2d74cb0feac09f8f3c32ae5cecc078230dbdeece39e53"
@@ -67,22 +140,30 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:6b32e89d721bcc3f5ad131f7ea1c4926ecf2c49225feff288a1d2e9fd86c1bd3"
+  digest = "1:100a36e16f77aaad7c9144ab26bcefb92c5b6ebed5b137f935fdc11f541fa5b8"
+  name = "golang.org/x/crypto"
+  packages = ["md4"]
+  pruneopts = "UT"
+  revision = "ea8f1a30c4438cc8b13f05538385ad8dc6049b43"
+
+[[projects]]
+  branch = "master"
+  digest = "1:ca4442090e3e524b7ff835c78b666db1a1a03211995ab2847a28e3c9b69af608"
   name = "golang.org/x/net"
   packages = [
     "idna",
     "publicsuffix",
   ]
   pruneopts = "UT"
-  revision = "d28f0bde5980168871434b95cfc858db9f2a7a99"
+  revision = "b5b0513f8c1bb7c1e3e6f168fba117131fe2614a"
 
 [[projects]]
   branch = "master"
-  digest = "1:249fd56fb36a223aee164e2dc35e3b3a1b92dd3873dfb60216280b9fb9d4a784"
+  digest = "1:9bf8453aa0482868383ef2a5648c08afe477b9c1d3032b098f902980677d5a82"
   name = "golang.org/x/sys"
   packages = ["unix"]
   pruneopts = "UT"
-  revision = "15dcb6c0061f497a3f66e3ea034b629c6dd4d99e"
+  revision = "6f217b454f458f9c81d48c1fff9e6f5ea6b0bbf2"
 
 [[projects]]
   digest = "1:8d8faad6b12a3a4c819a3f9618cb6ee1fa1cfc33253abeeea8b55336721e3405"
@@ -122,9 +203,12 @@
   analyzer-version = 1
   input-imports = [
     "github.com/gorilla/mux",
+    "github.com/jinzhu/gorm",
+    "github.com/jinzhu/gorm/dialects/mssql",
     "github.com/parnurzeal/gorequest",
     "github.com/phyber/negroni-gzip/gzip",
     "github.com/sirupsen/logrus",
+    "github.com/stretchr/testify/mock",
     "github.com/urfave/negroni",
     "gopkg.in/yaml.v2",
   ]

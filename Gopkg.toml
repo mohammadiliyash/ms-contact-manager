@@ -30,6 +30,10 @@
   version = "1.7.2"
 
 [[constraint]]
+  name = "github.com/jinzhu/gorm"
+  version = "1.9.9"
+
+[[constraint]]
   name = "github.com/parnurzeal/gorequest"
   version = "0.2.15"
 
@@ -40,6 +44,10 @@
 [[constraint]]
   name = "github.com/sirupsen/logrus"
   version = "1.4.2"
+
+[[constraint]]
+  name = "github.com/stretchr/testify"
+  version = "1.3.0"
 
 [[constraint]]
   name = "github.com/urfave/negroni"
